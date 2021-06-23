@@ -6,10 +6,6 @@ import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import CardMedia from '@material-ui/core/CardMedia';
 
-
-
-const font =  "'Raleway', sans-serif";
-
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -40,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function CardComponent(props) {
+export default function StudentCardComponent(props) {
     const classes = useStyles();
 
     if (props.error) {

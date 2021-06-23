@@ -1,7 +1,6 @@
 
-import { CssBaseline } from '@material-ui/core';
 import './App.css';
-import MainComponent from './Components/main.component';
+import StudentsComponent from './Components/students.component';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 // const font =  "'Raleway', sans-serif";
@@ -18,7 +17,7 @@ function App() {
   return (
     <div className="App">
      <ThemeProvider theme={theme}>
-        <MainComponent></MainComponent>
+        <StudentsComponent></StudentsComponent>
     </ThemeProvider>
 
     </div>
