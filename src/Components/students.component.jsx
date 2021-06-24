@@ -17,8 +17,8 @@ const useStyle = makeStyles((theme) => ({
   paper: {
     overflow: "auto",
     maxHeight: "90vh",
-    minWidth: "800px",
-  }
+    minWidth: "fitContent",
+  },
 }));
 
 export default function StudentsComponent() {
@@ -27,27 +27,23 @@ export default function StudentsComponent() {
   const [studentData, setStudentData] = useState([]);
 
   const classes = useStyle();
+  
   useEffect(() => {
     gettingData();
   }, []);
 
   const handleOnChange = (e) => {
-      
     const value = e;
     const matches = [];
-    if (value !== "") {
-      matches.push(
-        studentData.filter((x) => {
-          const fullName = `${x.firstName} ${x.lastName}`.toLowerCase();
-          if (fullName.includes(value.toLowerCase())) {
-            return x;
-          }
-        })
-      );
-      setData(...matches);
-    } else {
-      setData(data);
-    }
+    matches.push(
+      studentData.filter((x) => {
+        const fullName = `${x.firstName} ${x.lastName}`.toLowerCase();
+        if (fullName.includes(value.toLowerCase())) {
+          return x;
+        }
+      })
+    );
+    setData(...matches);
   };
 
   const gettingData = async () => {
@@ -64,7 +60,7 @@ export default function StudentsComponent() {
   return (
     <Container className={classes.items}>
       <Paper className={classes.paper} variant="outlined">
-        <SearchStudent handleOnChange={handleOnChange}/>
+        <SearchStudent handleOnChange={handleOnChange} />
         {data.map((item) => {
           return (
             <StudentCardComponent

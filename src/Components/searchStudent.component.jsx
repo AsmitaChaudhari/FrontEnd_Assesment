@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
- const SearchStudent= ({handleOnChange}) => {
+ const SearchStudent = ({handleOnChange}) => {
 
     const classes = useStyles();
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         <Box className={classes.searchbar}>
         <TextField
             name="studentSearch"
-            label="Search"
+            label="Search by name"
             fullWidth
             placeholder="Search by name..."
             margin='dense'
