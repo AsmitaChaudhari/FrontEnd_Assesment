@@ -1,6 +1,5 @@
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box'
-import { useState } from 'react';
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -9,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
- const SearchStudent = ({handleOnChange}) => {
+ const SearchStudent = ({handleOnChange, searchType}) => {
 
     const classes = useStyles();
 
@@ -17,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
         <Box className={classes.searchbar}>
         <TextField
             name="studentSearch"
-            label="Search by name"
+            label={`Search by ${searchType}`}
             fullWidth
-            placeholder="Search by name..."
+            placeholder={`Search by ${searchType}...`}
             margin='dense'
             size='small'
             onChange={(e) => handleOnChange(e.target.value)}

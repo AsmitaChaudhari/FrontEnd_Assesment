@@ -3,13 +3,15 @@ import './App.css';
 import StudentsComponent from './Components/students.component';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-// const font =  "'Raleway', sans-serif";
 
 const theme = createMuiTheme({
   typography: {
     fontFamily: ['Raleway',
     'sans-serif'
   ].join(','),
+  h4: {
+    fontWeight: 'bold'
+  }
   },
 });
 

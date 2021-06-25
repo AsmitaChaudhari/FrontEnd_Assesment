@@ -10,6 +10,8 @@ import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import { useState } from 'react';
 import RemoveIcon from '@material-ui/icons/Remove';
+import TextField from '@material-ui/core/TextField';
+import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,8 +46,12 @@ const useStyles = makeStyles((theme) => ({
     btn: {
         backgroundColor: 'lightgrey'
     },
-    grades: {
-        marginTop: theme.spacing(2)
+    grade: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2)
+    },
+    tagInput: {
+        marginTop: theme.spacing(1)
     }
 
 }))
@@ -54,10 +60,22 @@ const useStyles = makeStyles((theme) => ({
 export default function StudentCardComponent(props) {
     const classes = useStyles();
     const [toggleState, setToggleState] = useState(false);
+    const [tag, setTag] = useState('');
 
     const toggleBtn = () => {
         setToggleState(!toggleState)
+    };
+
+    const handleKeyDown = (e, index) => {
+        if (e.key === 'Enter') {
+            const value = e.target.value.trim()
+            if (value.length > 0) {
+                props.addNewTag(value, index - 1);
+                setTag('')
+            }
+        }
     }
+   
     if (props.error) {
         <Paper>
             <Typography>{props.error}</Typography>
@@ -65,6 +83,7 @@ export default function StudentCardComponent(props) {
     }
     else {
         const avg = (props.item.grades).reduce((a, b) => parseInt(a) + parseInt(b), 0) / props.item.grades.length;
+        const fullName = (props.item.firstName + " " + props.item.lastName).toUpperCase()
         return (
 
             <Card className={classes.root} key={props.item.id}>
@@ -74,25 +93,37 @@ export default function StudentCardComponent(props) {
 
                 <div className={classes.details}>
                     <CardContent className={classes.content}>
-                        <Typography variant="h4"> {props.item.firstName + " " + props.item.lastName} </Typography>
+                        <Typography variant="h4"> {fullName} </Typography>
                         <Typography variant="subtitle1" > Email: {props.item.email} </Typography>
                         <Typography variant="subtitle1" > Company: {props.item.company} </Typography>
                         <Typography variant="subtitle1" > Skill: {props.item.skill} </Typography>
                         <Typography variant="subtitle1" >Average: {avg} % </Typography>
-                        <div className={classes.grades}>
-                        {toggleState && (
-                            props.item.grades.map((item, index) => {
-                                return (
-                                    <Typography variant='subtitle1' >Item{index + 1} : {item}%</Typography>)
-                            })
+                        <div className={classes.grade}>
+                            {toggleState &&
+                                (props.item.grades.map((item, index) => {
+                                    return (
+                                        <Typography variant='subtitle1' key={index}>Item{index + 1} : {item}%</Typography>)
+                                })
+                                )}
+                        </div>
+                        {(props.item.tags.length > 0) && (
+                            props.item.tags.map((t, index) => <Chip label={t} key={index} style={{ margin: '2px' }} />)
                         )}
+                        <div className={classes.tagInput}>
+                            <TextField
+                                name="add tag"
+                                value={tag}
+                                label="Add Tag"
+                                onKeyDown={(e) => handleKeyDown(e, props.item.id)}
+                                onChange={e => setTag(e.target.value)}
+                            />
                         </div>
                     </CardContent>
                 </div>
                 <CardActions disableSpacing className={classes.expandbtn}>
                     {toggleState ? (
                         <IconButton className={classes.btn} onClick={toggleBtn}><RemoveIcon /></IconButton>
-                    ):(
+                    ) : (
                         <IconButton className={classes.btn} onClick={toggleBtn}><AddIcon /></IconButton>
                     )}
                 </CardActions>
